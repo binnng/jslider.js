@@ -10,7 +10,7 @@
 
 		this.id       = conf.id       || 'slider';
 		this.type     = conf.type     || 'infinite';
-		this.interval = conf.interval || 5000;
+		this.interval = conf.interval || 5;
 
 		this.init();
 
@@ -75,7 +75,7 @@ fn
 			fn();
 			curImg = nexImg;
 
-		}, this.interval);
+		}, this.interval * 1000);
 		
 	};
 
