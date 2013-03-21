@@ -3,6 +3,14 @@
 
 ### 使用示例
 
+```html
+<div id="slider">
+	<img src="http://bobobo.tietu.com/img/index/$1.jpg"/>
+	<img src="http://bobobo.tietu.com/img/index/$2.jpg" />
+	<img src="http://bobobo.tietu.com/img/index/$3.jpg" />
+</div>
+```
+
 ```javascript
 JSlider({
 	id: 'slider',
