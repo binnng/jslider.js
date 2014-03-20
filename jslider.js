@@ -6,87 +6,108 @@
  */
 (function($) {
 
-	var jslider = function(conf) {
+  var jslider = function(conf) {
 
-		this.id       = conf.id       || 'slider';
-		this.type     = conf.type     || 'infinite';
-		this.interval = conf.interval || 5;
+    this.id = conf.id || 'slider';
+    this.type = conf.type || 'infinite';
+    this.interval = conf.interval || 5;
 
-		this.init();
+    this.init();
 
-		return this;
+    return this;
 
-	};
+  };
 
-	jslider.prototype.init = function() {
+  jslider.prototype.init = function() {
 
-		var slider      = $('#' + this.id).css('overflow', 'hidden'),
-			width       = slider.width(),
-			sliderInner = (slider.html( '<div id="slider_inner">' + slider.html() + '</div>' ), $('#slider_inner')),
+    var slider = $('#' + this.id).css('overflow', 'hidden'),
+      width = slider.width(),
+      sliderInner = (slider.html('<div id="slider_inner">' + slider.html() + '</div>'), $('#slider_inner')),
 
-			imgs        = sliderInner.children('img'),
-			size        = imgs.length,
-			curImg      = 0,
-			nexImg,
+      imgs = sliderInner.children('img'),
+      size = imgs.length,
+      curImg = 0,
+      nexImg,
 
-			fn;
+      fn;
 
-		sliderInner.css({height:'100%'});
+    sliderInner.css({
+      height: '100%'
+    });
 
-		if ( this.type === 'fade' ) {
-			imgs.css({position: 'absolute', display: 'none'});
-			imgs.eq(0).css({zIndex: 2, display: 'block'});
-		} else {
-			sliderInner.css('width', width * size);
-			imgs.css({display: 'block', float: 'left'});
-		}
+    if (this.type === 'fade') {
+      imgs.css({
+        position: 'absolute',
+        display: 'none'
+      });
+      imgs.eq(0).css({
+        zIndex: 2,
+        display: 'block'
+      });
+    } else {
+      sliderInner.css('width', width * size);
+      imgs.css({
+        display: 'block',
+        float: 'left'
+      });
+    }
 
-		switch ( this.type ) {
-			case 'none' : fn = function() {
-				sliderInner.css({marginLeft:- width * nexImg});
-			};
-			break;
-			case 'fade' : fn = function() {
+    switch (this.type) {
+      case 'none':
+        fn = function() {
+          sliderInner.css({
+            marginLeft: -width * nexImg
+          });
+        };
+        break;
+      case 'fade':
+        fn = function() {
 
-				imgs.eq(nexImg).css('z-index', 2).fadeIn();
-				imgs.eq(curImg).css('z-index', 1).fadeOut();
-				
-			};
-			break;
-			case 'slide' : fn = function() {
+          imgs.eq(nexImg).css('z-index', 2).fadeIn();
+          imgs.eq(curImg).css('z-index', 1).fadeOut();
 
-				sliderInner.animate({marginLeft:- width * nexImg});
+        };
+        break;
+      case 'slide':
+        fn = function() {
 
-			};
-			break;
-			case 'infinite' : fn = function() {
-fn
-				sliderInner.animate({marginLeft:- width}, function() {
-					imgs.eq(curImg - 1).appendTo(sliderInner.css('margin-left', 0));
-				});
+          sliderInner.animate({
+            marginLeft: -width * nexImg
+          });
+
+        };
+        break;
+      case 'infinite':
+        fn = function() {
+          fn
+          sliderInner.animate({
+            marginLeft: -width
+          }, function() {
+            imgs.eq(curImg - 1).appendTo(sliderInner.css('margin-left', 0));
+          });
 
 
-			}
-		}
+        }
+    }
 
-		this.timer = setInterval(function() {
+    this.timer = setInterval(function() {
 
-			nexImg = nexImg === size - 1 ? 0 : curImg + 1;
-			fn();
-			curImg = nexImg;
+      nexImg = nexImg === size - 1 ? 0 : curImg + 1;
+      fn();
+      curImg = nexImg;
 
-		}, this.interval * 1000);
-		
-	};
+    }, this.interval * 1000);
 
-	jslider.prototype.clear = function() {
-		clearInterval(this.timer);
-	}
+  };
 
-	window.JSlider = function(conf) {
+  jslider.prototype.clear = function() {
+    clearInterval(this.timer);
+  }
 
-		return new jslider(conf);
+  window.JSlider = function(conf) {
 
-	}
+    return new jslider(conf);
+
+  }
 
 })(jQuery);
